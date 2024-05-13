@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Lending extends Model
 {
     use SoftDeletes;
-    protected $fillable = ["stuff_id", "date_time", "user_id", "notes", "total_stuff"];
+    protected $fillable = ["stuff_id", "date_time", "name", "user_id", "notes", "total_stuff"];
 
     public function user()
     {
@@ -20,7 +20,7 @@ class Lending extends Model
         return $this->belongsTo(Stuff::class);
     }
 
-    public function restorations()
+    public function restoration()
     {
         return $this->hasOne(Restoration::class);
     }

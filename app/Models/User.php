@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+use Tymon\JWTAuth\contracts\JWTsubject;
+
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTsubject
 {
     use Authenticatable, Authorizable, HasFactory, SoftDeletes;
 
@@ -31,6 +33,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     // protected $hidden = [
     //     'password',
     // ];
+
+
+   public function getJWTIdentifier()
+    {
+        return $this->getkey();
+    }
+
+    public function getJWTCustomclaims()
+    {
+        return[];
+    } 
 
     public function lendings()
     {

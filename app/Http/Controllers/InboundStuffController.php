@@ -11,6 +11,11 @@ use App\Models\Stuff;
 
 class InboundStuffController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function store(Request $request)
     {
        
@@ -147,21 +152,4 @@ class InboundStuffController extends Controller
             return ApiFormatter::sendResponse(400, 'bad request', $err->getMessage());
         }
     }   
-    
-    private function deleteAssociatedFile(InboundStuff $inboundStuff)
-    {
-        // Mendapatkan jalur lengkap ke direktori public
-        $publicPath = $_SERVER['DOCUMENT_ROOT'] . '/public/proof';
-
-    
-        // Menggabungkan jalur file dengan jalur direktori public
-         $filePath = public_path('proof/'.$inboundStuff->proof_file);
-    
-        // Periksa apakah file ada
-        if (file_exists($filePath)) {
-            // Hapus file jika ada
-            unlink(base_path($filePath));
-        }
-    }
-    
 }

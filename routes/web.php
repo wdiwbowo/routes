@@ -17,29 +17,48 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->group(['miidleware' => 'cors'], function ($router) {
+
+});
+
+$router->post('/login', 'AuthController@login');
+$router->get('/logout', 'AuthController@logout');
+$router->get('/profile', 'AuthController@me');
 // stuff
-// struktur : $router->method('/path', 'NamaController@namaFunction');
 $router->get('/stuffs', 'StuffController@index');
 $router->post('/stuffs/store', 'StuffController@store');
 $router->get('/stuffs/trash', 'StuffController@trash');
-$router->get('/stuffs/{id}', 'StuffController@show');
-$router->patch('/stuffs/update/{id}', 'StuffController@update');
-$router->delete('/stuffs/delete/{id}', 'StuffController@destroy');
-$router->get('/stuffs/trash/restore/{id}', 'StuffController@restore');// stuff
-$router->get('stuffs/trash/permanent-delete/{id}', 'StuffController@permanentDelete');
-
+//User
 $router->get('/users', 'UserController@index');//User
 $router->post('/users/store', 'UserController@store');
 $router->get('/users/trash', 'UserController@trash');
+//inbound-stuff
+$router->post('/inbound-stuffs/store', 'InboundStuffController@store');//inbound-stuff
+$router->get('/inbound-stuffs/trash', 'InboundStuffController@trash');
+//lending
+$router->post('/lending/store', 'LendingController@store');
+$router->get('/lending', 'LendingController@index');
+
+// stuff
+$router->patch('/stuffs/update/{id}', 'StuffController@update');
+$router->delete('/stuffs/delete/{id}', 'StuffController@destroy');
+$router->get('/stuffs/trash/restore/{id}', 'StuffController@restore');
+$router->get('stuffs/trash/permanent-delete/{id}', 'StuffController@permanentDelete');
+$router->get('/stuffs/{id}', 'StuffController@show');
+//User
 $router->get('/users/{id}', 'UserController@show');//User
 $router->patch('/users/update/{id}', 'UserController@update');
 $router->delete('/users/delete/{id}', 'UserController@destroy');
-$router->get('/users/trash/restore/{id}', 'UserController@restore');//User
+$router->get('/users/trash/restore/{id}', 'UserController@restore');
 $router->get('users/trash/permanent-delete/{id}', 'UserController@permanentDelete');
-
-$router->post('/inbound-stuffs/store', 'InboundStuffController@store');//inbound-stuff
-$router->delete('inbound-stuffs/delete/{id}', 'InboundStuffController@destroy');//inbound-stuff
+//inbound-stuff
+$router->get('/restore/{id}', 'InboundStuffController@restore');
+$router->delete('inbound-stuffs/delete/{id}', 'InboundStuffController@destroy');
 $router->delete('/inbound-stuffs/delete/{id}', 'InboundStuffController@destroy');
 $router->delete('/inbound-stuffs/permanent/{id}', 'InboundStuffController@deletePermanent');
-$router->get('/inbound-stuffs/trash', 'InboundStuffController@trash');
-$router->get('/restore/{id}', 'InboundStuffController@restore');
+//lending
+$router->delete('/lending/delete/{id}', 'LendingController@destroy');
+$router->get('/lending/{id}', 'LendingController@show');
+//restoration
+$router->post('/lending/{lending_id}', 'RestorationController@store');
+$router->post('/restorations/{lending_id}', 'RestorationController@store');
